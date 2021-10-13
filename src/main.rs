@@ -29,7 +29,7 @@ fn main() {
                 .read_line(&mut temperature)
                 .expect("Failed to the register the value.");
 
-            std::process::Command::new("clear").status().expect("Failed to clear screen.").success();
+            clear_screen();
 
             println!(
                 "The converted temperature to {}: {}",
@@ -44,7 +44,8 @@ fn main() {
             println!("Bye!");
             std::process::exit(200);
         } else {
-            break;
+            clear_screen();
+            println!("Please a valid choice...");
         }
     }
 }
@@ -52,7 +53,13 @@ fn main() {
 // convert temp based on choice  --- returns value in floating point
 fn convert_temp(temp: f32, choice: char) -> f32 {
     if choice == '1' {
-        return (temp - 32.0) * (5.0 / 9.0);
+        (temp - 32.0) * (5.0 / 9.0)
     }
-    return temp * (9.0 / 5.0) + 32.0;
+    temp * (9.0 / 5.0) + 32.0
+}
+
+fn clear_screen() {
+    std::process::Command::new("clear").status()
+    .expect("Failed to clear screen.")
+    .success();
 }
